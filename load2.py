@@ -58,13 +58,13 @@ if __name__ == '__main__':
         horizontal_flip=True)
 
 	#Input data
-	x_train, y_train = load_image_dataset(csv_file_path="training2/label.csv",
-	                                      images_path="training2")
+	x_train, y_train = load_image_dataset(csv_file_path="training/label.csv",
+	                                      images_path="training")
 	print(x_train.shape)
 	print(y_train.shape)
 
-	x_test, y_test = load_image_dataset(csv_file_path="test/label.csv",
-	                                    images_path="test")
+	x_test, y_test = load_image_dataset(csv_file_path="testing/label.csv",
+	                                    images_path="testing")
 	print(x_test.shape)
 	print(y_test.shape)
 
@@ -80,12 +80,12 @@ if __name__ == '__main__':
 	test_gen = ImageDataGenerator(rescale=1./255)
 	gen = ImageDataGenerator(rotation_range=7, width_shift_range=0.08, shear_range=0.3,
                          height_shift_range=0.08, zoom_range=0.08)
-	train_generator = gen.flow(x_train, Y_train, batch_size=160)
-	test_generator = test_gen.flow(x_test, Y_test, batch_size=40)
+	train_generator = gen.flow(x_train, Y_train, batch_size=40)
+	test_generator = test_gen.flow(x_test, Y_test, batch_size=10)
 
 	#testing the model
-	model.fit_generator(train_generator, steps_per_epoch=640//160, epochs=6, 
-                    validation_data=test_generator, validation_steps=160//40)
+	model.fit_generator(train_generator, steps_per_epoch=160//40, epochs=6, 
+                    validation_data=test_generator, validation_steps=40//10)
 
 
 	#evaluate the model
